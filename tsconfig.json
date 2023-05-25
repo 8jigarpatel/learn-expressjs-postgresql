@@ -14,7 +14,9 @@
     "esModuleInterop": true,
     /* Advanced Options */
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "lib": ["es2015"],
   "include": ["src"]
