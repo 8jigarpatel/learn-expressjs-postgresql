@@ -1,17 +1,17 @@
 import { DataSource } from 'typeorm';
 
-import AppSetting from './entities/AppSetting';
+import AppSetting from './entity/AppSetting';
 
 const dataSource = new DataSource({
   type: 'postgres',
-  database: 'VenzuTech',
-  // url: '',
-  host: 'host.docker.internal',
-  port: 5432,
-  username: 'postgres',
-  password: 'pgadmin',
+  database: process.env.DB_Name,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_Username,
+  password: process.env.DB_Password,
+  url: process.env.DB_URL,
   synchronize: true,
-  migrationsRun: true,
+  migrationsRun: false,
   entities: [AppSetting],
   migrations: [],
 });
