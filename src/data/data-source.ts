@@ -1,6 +1,8 @@
 import { DataSource } from 'typeorm';
+import 'dotenv/config';
 
 import AppSetting from './entity/AppSetting';
+import { AddAppSettings1685065174702 } from './migrations/1685065174702-AddAppSettings';
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -10,10 +12,10 @@ const dataSource = new DataSource({
   username: process.env.DB_Username,
   password: process.env.DB_Password,
   url: process.env.DB_URL,
-  synchronize: true,
-  migrationsRun: false,
+  synchronize: Boolean(process.env.DB_Synchronize),
+  migrationsRun: Boolean(process.env.DB_MigrationsRun),
   entities: [AppSetting],
-  migrations: [],
+  migrations: [AddAppSettings1685065174702],
 });
 
 export default dataSource;

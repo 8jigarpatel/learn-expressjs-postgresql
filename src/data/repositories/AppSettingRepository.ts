@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Service } from 'typedi';
 import dataSource from '../data-source';
 import AppSetting from '../entity/AppSetting';

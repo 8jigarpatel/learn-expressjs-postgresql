@@ -9,7 +9,10 @@
     "preserve": "npm run build",
     "serve": "concurrently \"npx tsc -w\"  \"nodemon dist/index.js\"",
     "lint": "eslint --ext .js,.cjs,.ts,.tsx .",
-    "lint:fix": "eslint --ext .js,.cjs,.ts,.tsx . --fix"
+    "lint:fix": "eslint --ext .js,.cjs,.ts,.tsx . --fix",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "npm run typeorm migration:create -- -d ./src/data/data-source.ts ./src/data/migrations/%npm_config_name%",
+    "migration:generate": "npm run typeorm migration:generate -- -d ./src/data/data-source.ts ./src/data/migrations/%npm_config_name%"
   },
   "keywords": [],
   "author": "",

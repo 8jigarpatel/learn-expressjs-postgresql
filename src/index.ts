@@ -2,7 +2,6 @@
 import 'reflect-metadata';
 import express, { Application } from 'express';
 import Container from 'typedi';
-import 'dotenv/config';
 
 import dataSource from './data/data-source';
 import AppSettingController from './api/controllers/AppSettingController';

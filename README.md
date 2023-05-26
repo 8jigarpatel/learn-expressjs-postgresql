@@ -4,7 +4,32 @@
 - Express (https://expressjs.com/)
 - PostgreSQL (https://www.postgresql.org/)
 
+---
+
 ## How-to
+
+### Add migrations
+
+#### After any schema change:
+
+1. Generate migration with `{migrationname}` name
+    ```
+    npm run migration:generate --name={migrationname}
+    ```
+
+2. Fix up lint/prettier things in the newly generated `{migrationname}.ts` file (in data/migrations directory)
+
+3. Add newly generated migration file in the `migrations` field of the `DataSource` in `data-source.ts` file
+
+4. run `npm run build` and `npm run start` to 'push' migrations to the database
+
+#### Adding a manual migration
+
+To add a manual migration with `{migrationname}` name, run:
+`npm run migration:create --name={migrationname}`
+
+- More info about TypeORM migrations: https://typeorm.io/migrations
+
 
 ### Run Postgres and PgAdmin4 docker containers locally for development
 
@@ -73,6 +98,8 @@ To use PgAdmin4 locally:
   - Connection > Username: postgres (from `docker run` command above)
   - Connection > Password: pgadmin (from `docker run` command above)
   - Connection > Save Passowrd: On/Off (On for ease of use)
+
+---
 
 ### Useful resources:
 - [How To Use TypeScript With Express & Node](https://www.youtube.com/watch?v=qy8PxD3alWw)
