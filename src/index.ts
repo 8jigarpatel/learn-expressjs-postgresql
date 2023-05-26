@@ -16,7 +16,7 @@ dataSource
   });
 
 const app: Application = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // setup routes
 const appSettingController = Container.get(AppSettingController);
