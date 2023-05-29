@@ -18,12 +18,13 @@ dataSource
 const app: Application = express();
 const port = process.env.PORT || 5000;
 
-// setup routes
-const appSettingController = Container.get(AppSettingController);
+app.use(express.json());
 
-app.use('/healthcheck', (_req, res) => {
+// setup routes
+app.use('/_health', (_req, res) => {
   res.status(200).send({ data: 'Hello World!' });
 });
+const appSettingController = Container.get(AppSettingController);
 app.use('/appsettings', appSettingController.routes());
 
 app.listen(port, () => console.log(`Server is listening on port ${port}!`));
