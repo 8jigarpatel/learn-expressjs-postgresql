@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
+    // "rootDir": "src",
+    "outDir": "dist",
     "target": "es5",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    /* Strict Type-Checking Options */
-    "strict": true,
-    "noImplicitAny": true,
-    /* Module Resolution Options */
-    "moduleResolution": "node",
-    "baseUrl": "./src",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    /* Advanced Options */
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
+
+    // "moduleResolution": "node",
+    // "noImplicitAny": true,
+    // "baseUrl": "./src",
   },
-  "lib": ["es2015"],
+  // "lib": ["es2015"],
   "include": ["src"]
 }

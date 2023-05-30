@@ -3,8 +3,9 @@ import 'reflect-metadata';
 import express, { Application } from 'express';
 import Container from 'typedi';
 
+import swaggerDoc from './utils/swagger';
 import dataSource from './data/data-source';
-import AppSettingController from './api/controllers/AppSettingController';
+import Routes from './api/Routes';
 
 dataSource
   .initialize()
@@ -20,11 +21,12 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
-// setup routes
-app.use('/_health', (_req, res) => {
-  res.status(200).send({ data: 'Hello World!' });
-});
-const appSettingController = Container.get(AppSettingController);
-app.use('/appsettings', appSettingController.routes());
+// const appSettingController = Container.get(AppSettingController);
+// app.use('/appsettings', appSettingController.routes());
 
-app.listen(port, () => console.log(`Server is listening on port ${port}!`));
+app.listen(port, () => {
+  const routes = Container.get(Routes);
+  routes.addRoutes(app);
+  swaggerDoc(app);
+  console.log(`Server is listening on port ${port}!`);
+});
