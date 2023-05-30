@@ -1,6 +1,7 @@
 import Container, { Service } from 'typedi';
 
 import AppSettingRepository from '../../data/repositories/AppSettingRepository';
+import AppSettingModal from '../../types/AppSetting.modal';
 
 @Service()
 export default class AppSettingService {
@@ -14,7 +15,7 @@ export default class AppSettingService {
     return this.appSettingRepository.getAppSetting(key);
   }
 
-  async updateAppSetting(key: string, newValue: string) {
-    return this.appSettingRepository.updateAppSetting(key, newValue);
+  async updateAppSetting(appSetting: AppSettingModal) {
+    return this.appSettingRepository.updateAppSetting(appSetting);
   }
 }

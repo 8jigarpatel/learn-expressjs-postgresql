@@ -3,8 +3,8 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 @Entity()
 export default class AppSetting {
   @PrimaryColumn({ type: 'text' })
-  key!: string;
+  Key!: string;
 
   @Column({ type: 'text' })
-  value!: string;
+  Value!: string;
 }
