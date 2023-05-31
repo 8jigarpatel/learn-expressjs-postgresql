@@ -5,32 +5,32 @@ import AppSettingModal from '../../types/AppSetting.modal';
 
 @Service()
 export default class AppSettingRepository {
-  async getAppSettings() {
+  async getAll() {
     const repo = dataSource.getRepository(AppSetting);
-    const settings = await repo.find();
-    return settings;
+    const entities = await repo.find();
+    return entities;
   }
 
-  async getAppSetting(Key: string) {
+  async get(Key: string) {
     try {
       const repo = dataSource.getRepository(AppSetting);
-      const setting = await repo.findOneBy({ Key });
-      return setting;
+      const entity = await repo.findOneBy({ Key });
+      return entity;
     } catch (ex) {
       // JP > TODO: log ex
       return null;
     }
   }
 
-  async updateAppSetting(appSetting: AppSettingModal) {
+  async update(modal: AppSettingModal) {
     try {
       const repo = dataSource.getRepository(AppSetting);
-      const setting = await repo.findOneBy({ Key: appSetting.Key });
-      if (setting) {
-        setting.Value = appSetting.Value;
-        await repo.save(setting);
+      const entity = await repo.findOneBy({ Key: modal.Key });
+      if (entity) {
+        entity.Value = modal.Value;
+        await repo.save(entity);
       }
-      return setting;
+      return entity;
     } catch (ex) {
       // JP > TODO: log ex
       return null;

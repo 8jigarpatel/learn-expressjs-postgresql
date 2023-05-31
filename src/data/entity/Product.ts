@@ -9,6 +9,7 @@ import ITrackable from './ITrackable';
 import User from './User';
 import IAssignable from './IAssignable';
 import ProductType from './ProductType';
+import Customer from './Customer';
 
 @Entity()
 export default class Product implements ITrackable, IAssignable {
@@ -21,6 +22,10 @@ export default class Product implements ITrackable, IAssignable {
 
   @Column({ type: 'date' })
   Status!: string;
+
+  @OneToOne(() => Customer)
+  @JoinColumn()
+  Customer!: Customer;
 
   @Column({ type: 'date' })
   CreatedAt!: Date;

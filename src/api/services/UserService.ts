@@ -5,29 +5,29 @@ import UserModal from '../../types/User.modal';
 
 @Service()
 export default class UserService {
-  userRepository = Container.get(UserRepository);
+  repository = Container.get(UserRepository);
 
-  async getUsers() {
-    return this.userRepository.getUsers();
+  async getAll() {
+    return this.repository.getAll();
   }
 
-  async getUser(Id: string) {
-    return this.userRepository.getUser(Id);
+  async get(id: string) {
+    return this.repository.get(id);
   }
 
-  async createUser(User: UserModal) {
-    return this.userRepository.createUser(User);
+  async create(modal: UserModal) {
+    return this.repository.create(modal);
   }
 
-  async updateUser(User: UserModal) {
-    return this.userRepository.updateUser(User);
+  async update(modal: UserModal) {
+    return this.repository.update(modal);
   }
 
-  async patchUser(User: UserModal) {
-    return this.userRepository.patchUser(User);
+  async patch(modal: UserModal) {
+    return this.repository.patch(modal);
   }
 
-  async deleteUser(Id: string) {
-    return this.userRepository.deleteUser(Id);
+  async delete(id: string) {
+    return this.repository.delete(id);
   }
 }

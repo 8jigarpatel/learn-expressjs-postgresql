@@ -5,17 +5,17 @@ import AppSettingModal from '../../types/AppSetting.modal';
 
 @Service()
 export default class AppSettingService {
-  appSettingRepository = Container.get(AppSettingRepository);
+  repository = Container.get(AppSettingRepository);
 
-  async getAppSettings() {
-    return this.appSettingRepository.getAppSettings();
+  async getAll() {
+    return this.repository.getAll();
   }
 
-  async getAppSetting(key: string) {
-    return this.appSettingRepository.getAppSetting(key);
+  async get(Key: string) {
+    return this.repository.get(Key);
   }
 
-  async updateAppSetting(appSetting: AppSettingModal) {
-    return this.appSettingRepository.updateAppSetting(appSetting);
+  async update(modal: AppSettingModal) {
+    return this.repository.update(modal);
   }
 }
