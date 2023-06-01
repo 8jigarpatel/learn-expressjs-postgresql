@@ -4,6 +4,7 @@ import Container, { Service } from 'typedi';
 import AppSettingService from './services/AppSettingService';
 import CustomerService from './services/CustomerService';
 import UserService from './services/UserService';
+import ProductTypeService from './services/ProductTypeService';
 
 function healthRoutes(app: Application) {
   /**
@@ -39,8 +40,8 @@ function appSettingRoutes(app: Application, service: AppSettingService) {
    *           type: string
    *           description: The Value
    *       example:
-   *         Key: k2
-   *         Value: MyApp
+   *         Key: "k2"
+   *         Value: "MyApp"
    */
 
   /**
@@ -127,11 +128,7 @@ function userRoutes(app: Application, service: UserService) {
    *       required:
    *         - FirstName
    *         - LastName
-   *         - Email
    *       properties:
-   *         Id:
-   *           type: string
-   *           description: Id
    *         FirstName:
    *           type: string
    *           description: The First Name
@@ -148,11 +145,10 @@ function userRoutes(app: Application, service: UserService) {
    *           type: string
    *           description: The External Id
    *       example:
-   *          Id: "0"
-   *          FirstName: John
-   *          LastName: Doe
-   *          Email: JohnDoe@emailaddress.emaildotcom
-   *          Phone: 780587456
+   *          FirstName: "John"
+   *          LastName: "Doe"
+   *          Email: "JohnDoe@emailaddress.emaildotcom"
+   *          Phone: "780587456"
    *          IdExternal:
    */
 
@@ -325,11 +321,7 @@ function customerRoutes(app: Application, service: CustomerService) {
    *       required:
    *         - FirstName
    *         - LastName
-   *         - Email
    *       properties:
-   *         Id:
-   *           type: string
-   *           description: Id
    *         FirstName:
    *           type: string
    *           description: The First Name
@@ -346,11 +338,10 @@ function customerRoutes(app: Application, service: CustomerService) {
    *           type: string
    *           description: The External Id
    *       example:
-   *          Id: "0"
-   *          FirstName: Citizen
-   *          LastName: Man
-   *          Email: citizen@emailman.emaildotcom
-   *          Phone: 684583219
+   *          FirstName: "Citizen"
+   *          LastName: "Man"
+   *          Email: "citizen@emailman.emaildotcom"
+   *          Phone: "684583219"
    *          IdExternal:
    */
 
@@ -513,6 +504,107 @@ function customerRoutes(app: Application, service: CustomerService) {
   });
 }
 
+function productTypeRoutes(app: Application, service: ProductTypeService) {
+  /**
+   * @openapi
+   * components:
+   *   schemas:
+   *     ProductType:
+   *       type: object
+   *       required:
+   *         - CreatedById
+   *         - Name
+   *         - Cost
+   *       properties:
+   *         CreatedById:
+   *           type: string
+   *           description: CreatedById of User
+   *         Name:
+   *           type: string
+   *           description: The Name
+   *         Cost:
+   *           type: money
+   *           description: The Cost
+   *       example:
+   *          CreatedById: "81560572-b30c-46e9-a3c0-434743172069"
+   *          Name: "Printer Epson 220"
+   *          Cost: 90.99
+   */
+
+  /**
+   * @openapi
+   * /producttypes:
+   *  get:
+   *      summary: Get all Product Types
+   *      tags:
+   *        - Product Types
+   *      responses:
+   *        200:
+   *          description: Get all Product Types
+   */
+  app.get('/producttypes', async (_req, res) => {
+    const productTypes = await service.getAll();
+    res.send(productTypes);
+  });
+
+  /**
+   * @openapi
+   * /producttypes/{id}:
+   *  get:
+   *      summary: Get Product Type
+   *      tags:
+   *        - Product Types
+   *      parameters:
+   *        - name: id
+   *          in: path
+   *          description: Id of Product Type
+   *          required: true
+   *          schema:
+   *            type: string
+   *      responses:
+   *        200:
+   *          description: Get Product Type
+   *        404:
+   *          description: Product Type could not be found
+   */
+  app.get('/producttypes/:id', async (req, res) => {
+    const productType = await service.get(req.params.id);
+    if (productType) {
+      res.send(productType);
+    } else {
+      res.sendStatus(404);
+    }
+  });
+
+  /**
+   * @openapi
+   * /producttypes:
+   *  post:
+   *      summary: Create Product Type
+   *      tags:
+   *        - Product Types
+   *      requestBody:
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              $ref: '#/components/schemas/ProductType'
+   *      responses:
+   *        200:
+   *          description: Product Type created
+   *        400:
+   *          description: Product Type could not be created
+   */
+  app.post('/producttypes', async (req, res) => {
+    const productType = await service.create(req.body);
+    if (productType) {
+      res.send(productType);
+    } else {
+      res.sendStatus(400);
+    }
+  });
+}
+
 @Service()
 export default class Routes {
   appSettingService = Container.get(AppSettingService);
@@ -521,10 +613,13 @@ export default class Routes {
 
   userService = Container.get(UserService);
 
+  productTypeService = Container.get(ProductTypeService);
+
   addRoutes(app: Application) {
     healthRoutes(app);
     appSettingRoutes(app, this.appSettingService);
     userRoutes(app, this.userService);
     customerRoutes(app, this.customerService);
+    productTypeRoutes(app, this.productTypeService);
   }
 }

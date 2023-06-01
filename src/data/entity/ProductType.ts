@@ -19,14 +19,14 @@ export default class ProductType implements ITrackable {
   @Column({ type: 'money' })
   Cost!: number;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   CreatedAt!: Date;
 
   @OneToOne(() => User)
   @JoinColumn()
   CreatedBy!: User;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   ModifiedAt!: Date;
 
   @OneToOne(() => User)

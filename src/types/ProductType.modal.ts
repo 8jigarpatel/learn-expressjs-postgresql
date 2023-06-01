@@ -1,5 +1,3 @@
-import User from '../data/entity/User';
-
 export default class ProductTypeModal {
   Id!: string;
 
@@ -9,9 +7,9 @@ export default class ProductTypeModal {
 
   CreatedAt!: Date;
 
-  CreatedBy!: User;
+  CreatedById!: string;
 
   ModifiedAt!: Date;
 
-  ModifiedBy!: User;
+  ModifiedById!: string;
 }

@@ -20,28 +20,28 @@ export default class Product implements ITrackable, IAssignable {
   @JoinColumn()
   Type!: ProductType;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   Status!: string;
 
   @OneToOne(() => Customer)
   @JoinColumn()
   Customer!: Customer;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   CreatedAt!: Date;
 
   @OneToOne(() => User)
   @JoinColumn()
   CreatedBy!: User;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   ModifiedAt!: Date;
 
   @OneToOne(() => User)
   @JoinColumn()
   ModifiedBy!: User;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   AssignedAt!: Date;
 
   @OneToOne(() => User)
