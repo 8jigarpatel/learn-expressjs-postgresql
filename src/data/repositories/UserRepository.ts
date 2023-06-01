@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 
-import dataSource from '../data-source';
+import { dataSource } from '../data-source';
 import User from '../entity/User';
 import UserModal from '../../types/User.modal';
 

@@ -1,0 +1,28 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    // {
+    //   "type": "node",
+    //   "request": "launch",
+    //   "name": "Launch JS",
+    //   "skipFiles": ["<node_internals>/**"],
+    //   "program": "${workspaceFolder}\\dist\\src\\index.js",
+    //   "outFiles": ["${workspaceFolder}/**/*.js"]
+    // },
+    {
+      "name": "Debug TS",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 5000,
+      "outFiles": [],
+      "sourceMaps": true
+      // "runtimeArgs": ["-r", "ts-node/register"],
+      // "program": "${workspaceFolder}\\src\\index.ts",
+      // "cwd": "${workspaceFolder}",
+    }
+  ]
+}

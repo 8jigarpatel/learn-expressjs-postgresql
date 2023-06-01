@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import dataSource from '../data-source';
+import { dataSource } from '../data-source';
 import AppSetting from '../entity/AppSetting';
 import AppSettingModal from '../../types/AppSetting.modal';
 

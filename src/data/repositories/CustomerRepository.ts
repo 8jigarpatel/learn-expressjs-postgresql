@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import dataSource from '../data-source';
+import { dataSource } from '../data-source';
 import Customer from '../entity/Customer';
 import CustomerModal from '../../types/Customer.modal';
 

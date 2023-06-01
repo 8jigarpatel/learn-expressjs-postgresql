@@ -1,32 +1,46 @@
-/* eslint-disable no-console */
+/* eslint-disable no-restricted-syntax */
 import 'reflect-metadata';
 import express, { Application } from 'express';
+import { log } from 'console';
+import * as path from 'path';
+
 import Container from 'typedi';
+import morgan from 'morgan';
+import * as rfs from 'rotating-file-stream';
 
-import swaggerDoc from './utils/swagger';
-import dataSource from './data/data-source';
 import Routes from './api/Routes';
-
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('data source initialized');
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+import swaggerDoc from './utils/swagger';
+import { port, loggingConfig } from './config';
+import { initDataSource } from './data/data-source';
 
 const app: Application = express();
-const port = process.env.PORT || 5000;
 
+// JP > TODO: move logging to separate module
+if (loggingConfig.enable) {
+  const loggingFormat = loggingConfig.format || 'combined';
+  log(
+    `Logging enabled [format: '${loggingFormat}'] [location: '${
+      loggingConfig.fileName ? `${loggingConfig.fileName}.log` : 'console'
+    }'].`
+  );
+
+  if (loggingConfig.fileName) {
+    const accessLogStream = rfs.createStream(`${loggingConfig.fileName}.log`, {
+      interval: `${loggingConfig.fileRotationDays}d`,
+      path: path.join(__dirname, 'logs'),
+    });
+    app.use(morgan(loggingFormat, { stream: accessLogStream }));
+  } else {
+    app.use(morgan(loggingFormat));
+  }
+}
+
+initDataSource();
 app.use(express.json());
-
-// const appSettingController = Container.get(AppSettingController);
-// app.use('/appsettings', appSettingController.routes());
 
 app.listen(port, () => {
   const routes = Container.get(Routes);
   routes.addRoutes(app);
   swaggerDoc(app);
-  console.log(`Server is listening on port ${port}!`);
+  log(`Server is listening on port ${port}!`);
 });
