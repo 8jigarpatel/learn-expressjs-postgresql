@@ -1,4 +1,4 @@
-export default class UserModal {
+export default class CustomerModal {
   Id!: string;
 
   IdExternal!: string;
