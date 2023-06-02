@@ -1,7 +1,8 @@
 import { Service } from 'typedi';
+
 import CustomerModal from '../../types/customer.modal';
 import { dataSource } from '../data-source';
-import Customer from '../entity/customer';
+import Customer from '../entity/customer.entity';
 
 @Service()
 export default class CustomerRepository {

@@ -5,11 +5,11 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import ITrackable from './ITrackable';
-import User from './user';
+import ITrackableEntity from './ITrackable.entity';
+import UserEntity from './user.entity';
 
 @Entity()
-export default class ProductType implements ITrackable {
+export default class ProductTypeEntity implements ITrackableEntity {
   @PrimaryGeneratedColumn('uuid')
   Id!: string;
 
@@ -22,14 +22,14 @@ export default class ProductType implements ITrackable {
   @Column({ type: 'timestamp' })
   CreatedAt!: Date;
 
-  @OneToOne(() => User)
+  @OneToOne(() => UserEntity)
   @JoinColumn()
-  CreatedBy!: User;
+  CreatedBy!: UserEntity;
 
   @Column({ type: 'timestamp' })
   ModifiedAt!: Date;
 
-  @OneToOne(() => User)
+  @OneToOne(() => UserEntity)
   @JoinColumn()
-  ModifiedBy!: User;
+  ModifiedBy!: UserEntity;
 }

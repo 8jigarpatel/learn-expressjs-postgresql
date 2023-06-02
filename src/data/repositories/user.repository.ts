@@ -2,19 +2,19 @@ import { Service } from 'typedi';
 
 import UserModal from '../../types/user.modal';
 import { dataSource } from '../data-source';
-import User from '../entity/user';
+import UserEntity from '../entity/user.entity';
 
 @Service()
 export default class UserRepository {
   async getAll() {
-    const repo = dataSource.getRepository(User);
+    const repo = dataSource.getRepository(UserEntity);
     const entities = await repo.find();
     return entities;
   }
 
   async get(Id: string) {
     try {
-      const repo = dataSource.getRepository(User);
+      const repo = dataSource.getRepository(UserEntity);
       const entity = await repo.findOneBy({ Id });
       return entity;
     } catch (ex) {
@@ -25,14 +25,14 @@ export default class UserRepository {
 
   async create(modal: UserModal) {
     try {
-      const entity = new User();
+      const entity = new UserEntity();
       entity.Email = modal.Email;
       entity.Phone = modal.Phone;
       entity.FirstName = modal.FirstName;
       entity.LastName = modal.LastName;
       entity.IdExternal = modal.IdExternal;
 
-      const repo = dataSource.getRepository(User);
+      const repo = dataSource.getRepository(UserEntity);
       await repo.save(entity);
       return entity;
     } catch (ex) {
@@ -43,7 +43,7 @@ export default class UserRepository {
 
   async update(modal: UserModal) {
     try {
-      const repo = dataSource.getRepository(User);
+      const repo = dataSource.getRepository(UserEntity);
       const entity = await repo.findOneBy({ Id: modal.Id });
       if (entity) {
         entity.IdExternal = modal.IdExternal || '';
@@ -62,7 +62,7 @@ export default class UserRepository {
 
   async patch(modal: UserModal) {
     try {
-      const repo = dataSource.getRepository(User);
+      const repo = dataSource.getRepository(UserEntity);
       const entity = await repo.findOneBy({ Id: modal.Id });
       if (entity) {
         if (modal.IdExternal) entity.IdExternal = modal.IdExternal;
@@ -81,7 +81,7 @@ export default class UserRepository {
 
   async delete(Id: string) {
     try {
-      const repo = dataSource.getRepository(User);
+      const repo = dataSource.getRepository(UserEntity);
       const entity = await repo.findOneBy({ Id });
       if (entity) {
         await repo.remove(entity);

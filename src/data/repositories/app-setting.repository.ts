@@ -1,19 +1,20 @@
 import { Service } from 'typedi';
+
 import AppSettingModal from '../../types/app-setting.modal';
 import { dataSource } from '../data-source';
-import AppSetting from '../entity/app-setting';
+import AppSettingEntity from '../entity/app-setting.entity';
 
 @Service()
 export default class AppSettingRepository {
   async getAll() {
-    const repo = dataSource.getRepository(AppSetting);
+    const repo = dataSource.getRepository(AppSettingEntity);
     const entities = await repo.find();
     return entities;
   }
 
   async get(Key: string) {
     try {
-      const repo = dataSource.getRepository(AppSetting);
+      const repo = dataSource.getRepository(AppSettingEntity);
       const entity = await repo.findOneBy({ Key });
       return entity;
     } catch (ex) {
@@ -24,7 +25,7 @@ export default class AppSettingRepository {
 
   async update(modal: AppSettingModal) {
     try {
-      const repo = dataSource.getRepository(AppSetting);
+      const repo = dataSource.getRepository(AppSettingEntity);
       const entity = await repo.findOneBy({ Key: modal.Key });
       if (entity) {
         entity.Value = modal.Value;
