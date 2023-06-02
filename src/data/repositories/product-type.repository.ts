@@ -2,13 +2,13 @@ import { Service } from 'typedi';
 
 import ProductTypeModal from '../../types/product-type.modal';
 import { dataSource } from '../data-source';
-import ProductTypeEntity from '../entity/product-type.entity';
-import UserEntity from '../entity/user.entity';
+import ProductType from '../entities/product-type.entity';
+import User from '../entities/user.entity';
 
 @Service()
 export default class ProductTypeRepository {
   async getAll() {
-    const repo = dataSource.getRepository(ProductTypeEntity);
+    const repo = dataSource.getRepository(ProductType);
     const entities = await repo.find({
       relations: {
         CreatedBy: true,
@@ -20,7 +20,7 @@ export default class ProductTypeRepository {
 
   async get(Id: string) {
     try {
-      const repo = dataSource.getRepository(ProductTypeEntity);
+      const repo = dataSource.getRepository(ProductType);
       const entity = await repo.findOneBy({ Id });
       // JP > TODO: return CreatedBy/ModifiedBy entities with result
       return entity;
@@ -32,12 +32,12 @@ export default class ProductTypeRepository {
 
   async create(modal: ProductTypeModal) {
     try {
-      const userRepo = dataSource.getRepository(UserEntity);
+      const userRepo = dataSource.getRepository(User);
       const uesrEntity = await userRepo.findOneByOrFail({
         Id: modal.CreatedById,
       });
 
-      const entity = new ProductTypeEntity();
+      const entity = new ProductType();
       entity.CreatedBy = uesrEntity;
       entity.ModifiedBy = uesrEntity;
       entity.CreatedAt = new Date();
@@ -45,7 +45,7 @@ export default class ProductTypeRepository {
       entity.Name = modal.Name;
       entity.Cost = modal.Cost;
 
-      const repo = dataSource.getRepository(ProductTypeEntity);
+      const repo = dataSource.getRepository(ProductType);
       await repo.save(entity);
       return entity;
     } catch (ex) {

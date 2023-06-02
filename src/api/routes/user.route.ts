@@ -1,5 +1,6 @@
 import { Application } from 'express';
 
+import { handleApiError } from '../apiUtils';
 import UserService from '../services/user.service';
 
 export default function userRoute(app: Application, service: UserService) {
@@ -48,8 +49,12 @@ export default function userRoute(app: Application, service: UserService) {
    *          description: Get all Users
    */
   app.get('/users', async (_req, res) => {
-    const users = await service.getAll();
-    res.send(users);
+    try {
+      const users = await service.getAll();
+      res.send(users);
+    } catch (error) {
+      handleApiError(error as Error, res);
+    }
   });
 
   /**
@@ -73,11 +78,15 @@ export default function userRoute(app: Application, service: UserService) {
    *          description: User could not be found
    */
   app.get('/users/:id', async (req, res) => {
-    const user = await service.get(req.params.id);
-    if (user) {
-      res.send(user);
-    } else {
-      res.sendStatus(404);
+    try {
+      const user = await service.get(req.params.id);
+      if (user) {
+        res.send(user);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -101,11 +110,15 @@ export default function userRoute(app: Application, service: UserService) {
    *          description: User could not be created
    */
   app.post('/users', async (req, res) => {
-    const user = await service.create(req.body);
-    if (user) {
-      res.send(user);
-    } else {
-      res.sendStatus(400);
+    try {
+      const user = await service.create(req.body);
+      if (user) {
+        res.send(user);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -129,11 +142,15 @@ export default function userRoute(app: Application, service: UserService) {
    *          description: User could not be updated
    */
   app.put('/users', async (req, res) => {
-    const user = await service.update(req.body);
-    if (user) {
-      res.send(user);
-    } else {
-      res.sendStatus(400);
+    try {
+      const user = await service.update(req.body);
+      if (user) {
+        res.send(user);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -157,11 +174,15 @@ export default function userRoute(app: Application, service: UserService) {
    *          description: User could not be patched
    */
   app.patch('/users', async (req, res) => {
-    const user = await service.patch(req.body);
-    if (user) {
-      res.send(user);
-    } else {
-      res.sendStatus(400);
+    try {
+      const user = await service.patch(req.body);
+      if (user) {
+        res.send(user);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -186,11 +207,15 @@ export default function userRoute(app: Application, service: UserService) {
    *          description: User could not be deleted
    */
   app.delete('/users/:id', async (req, res) => {
-    const userFoundAndDeleted = await service.delete(req.params.id);
-    if (userFoundAndDeleted) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(400);
+    try {
+      const userFoundAndDeleted = await service.delete(req.params.id);
+      if (userFoundAndDeleted) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 }

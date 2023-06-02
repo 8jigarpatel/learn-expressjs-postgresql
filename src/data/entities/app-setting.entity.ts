@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export default class AppSettingEntity {
+export default class AppSetting {
   @PrimaryColumn({ type: 'text' })
   Key!: string;
 

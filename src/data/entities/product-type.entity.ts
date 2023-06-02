@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import ITrackableEntity from './ITrackable.entity';
-import UserEntity from './user.entity';
+import User from './user.entity';
 
 @Entity()
-export default class ProductTypeEntity implements ITrackableEntity {
+export default class ProductType implements ITrackableEntity {
   @PrimaryGeneratedColumn('uuid')
   Id!: string;
 
@@ -22,14 +22,14 @@ export default class ProductTypeEntity implements ITrackableEntity {
   @Column({ type: 'timestamp' })
   CreatedAt!: Date;
 
-  @OneToOne(() => UserEntity)
+  @OneToOne(() => User)
   @JoinColumn()
-  CreatedBy!: UserEntity;
+  CreatedBy!: User;
 
   @Column({ type: 'timestamp' })
   ModifiedAt!: Date;
 
-  @OneToOne(() => UserEntity)
+  @OneToOne(() => User)
   @JoinColumn()
-  ModifiedBy!: UserEntity;
+  ModifiedBy!: User;
 }

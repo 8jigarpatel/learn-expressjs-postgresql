@@ -2,6 +2,7 @@ import Container, { Service } from 'typedi';
 
 import CustomerRepository from '../../data/repositories/customer.repository';
 import CustomerModal from '../../types/customer.modal';
+import ApplicationError from '../../utils/application-error';
 
 @Service()
 export default class CustomerService {
@@ -16,6 +17,12 @@ export default class CustomerService {
   }
 
   async create(modal: CustomerModal) {
+    if (modal.Email) {
+      const user = this.repository.getByEmail(modal.Email);
+      if (user != null) {
+        throw new ApplicationError('User with this email already exists.');
+      }
+    }
     return this.repository.create(modal);
   }
 

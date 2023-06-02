@@ -1,5 +1,5 @@
-import { DataSource } from 'typeorm';
 import { log } from 'console';
+import { DataSource } from 'typeorm';
 
 import { dataSourceConfig } from '../config';
 
@@ -13,7 +13,7 @@ export const dataSource = new DataSource({
   url: dataSourceConfig.url,
   synchronize: dataSourceConfig.synchronize,
   migrationsRun: dataSourceConfig.migrationsRun,
-  entities: [`${__dirname}/entity/*.{ts,js}`],
+  entities: [`${__dirname}/entities/*.{ts,js}`],
   migrations: [`${__dirname}/migrations/*.{ts,js}`],
 });
 
@@ -24,6 +24,6 @@ export function initDataSource() {
       log('data source initialized');
     })
     .catch((error) => {
-      error(error);
+      log(`data source ERROR: ${error}`);
     });
 }

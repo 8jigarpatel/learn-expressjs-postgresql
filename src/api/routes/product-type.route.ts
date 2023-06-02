@@ -1,5 +1,6 @@
 import { Application } from 'express';
 
+import { handleApiError } from '../apiUtils';
 import ProductTypeService from '../services/product-type.service';
 
 export default function productTypeRoute(
@@ -44,8 +45,12 @@ export default function productTypeRoute(
    *          description: Get all Product Types
    */
   app.get('/producttypes', async (_req, res) => {
-    const productTypes = await service.getAll();
-    res.send(productTypes);
+    try {
+      const productTypes = await service.getAll();
+      res.send(productTypes);
+    } catch (error) {
+      handleApiError(error as Error, res);
+    }
   });
 
   /**
@@ -69,11 +74,15 @@ export default function productTypeRoute(
    *          description: Product Type could not be found
    */
   app.get('/producttypes/:id', async (req, res) => {
-    const productType = await service.get(req.params.id);
-    if (productType) {
-      res.send(productType);
-    } else {
-      res.sendStatus(404);
+    try {
+      const productType = await service.get(req.params.id);
+      if (productType) {
+        res.send(productType);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -97,11 +106,15 @@ export default function productTypeRoute(
    *          description: Product Type could not be created
    */
   app.post('/producttypes', async (req, res) => {
-    const productType = await service.create(req.body);
-    if (productType) {
-      res.send(productType);
-    } else {
-      res.sendStatus(400);
+    try {
+      const productType = await service.create(req.body);
+      if (productType) {
+        res.send(productType);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 }

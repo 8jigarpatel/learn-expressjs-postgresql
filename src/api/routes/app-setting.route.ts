@@ -1,5 +1,6 @@
 import { Application } from 'express';
 
+import { handleApiError } from '../apiUtils';
 import AppSettingService from '../services/app-setting.service';
 
 export default function appSettingRoute(
@@ -39,8 +40,12 @@ export default function appSettingRoute(
    *          description: Get all App Settings
    */
   app.get('/appsettings', async (_req, res) => {
-    const settings = await service.getAll();
-    res.send(settings);
+    try {
+      const settings = await service.getAll();
+      res.send(settings);
+    } catch (error) {
+      handleApiError(error as Error, res);
+    }
   });
 
   /**
@@ -64,11 +69,15 @@ export default function appSettingRoute(
    *          description: App Setting requested was not found
    */
   app.get('/appsettings/:key', async (req, res) => {
-    const setting = await service.get(req.params.key);
-    if (setting) {
-      res.send(setting);
-    } else {
-      res.sendStatus(404);
+    try {
+      const setting = await service.get(req.params.key);
+      if (setting) {
+        res.send(setting);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -92,11 +101,15 @@ export default function appSettingRoute(
    *          description: App Setting requested was not found
    */
   app.put('/appsettings', async (req, res) => {
-    const setting = await service.update(req.body);
-    if (setting) {
-      res.send(setting);
-    } else {
-      res.sendStatus(404);
+    try {
+      const setting = await service.update(req.body);
+      if (setting) {
+        res.send(setting);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 }

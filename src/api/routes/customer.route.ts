@@ -1,5 +1,6 @@
 import { Application } from 'express';
 
+import { handleApiError } from '../apiUtils';
 import CustomerService from '../services/customer.service';
 
 export default function customerRoute(
@@ -51,8 +52,12 @@ export default function customerRoute(
    *          description: Get all Customers
    */
   app.get('/customers', async (_req, res) => {
-    const customers = await service.getAll();
-    res.send(customers);
+    try {
+      const customers = await service.getAll();
+      res.send(customers);
+    } catch (error) {
+      handleApiError(error as Error, res);
+    }
   });
 
   /**
@@ -76,11 +81,15 @@ export default function customerRoute(
    *          description: Customer could not be found
    */
   app.get('/customers/:id', async (req, res) => {
-    const customer = await service.get(req.params.id);
-    if (customer) {
-      res.send(customer);
-    } else {
-      res.sendStatus(404);
+    try {
+      const customer = await service.get(req.params.id);
+      if (customer) {
+        res.send(customer);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -104,11 +113,15 @@ export default function customerRoute(
    *          description: Customer could not be created
    */
   app.post('/customers', async (req, res) => {
-    const customer = await service.create(req.body);
-    if (customer) {
-      res.send(customer);
-    } else {
-      res.sendStatus(400);
+    try {
+      const customer = await service.create(req.body);
+      if (customer) {
+        res.send(customer);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -132,11 +145,15 @@ export default function customerRoute(
    *          description: Customer could not be updated
    */
   app.put('/customers', async (req, res) => {
-    const customer = await service.update(req.body);
-    if (customer) {
-      res.send(customer);
-    } else {
-      res.sendStatus(400);
+    try {
+      const customer = await service.update(req.body);
+      if (customer) {
+        res.send(customer);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -160,11 +177,15 @@ export default function customerRoute(
    *          description: Customer could not be patched
    */
   app.patch('/customers', async (req, res) => {
-    const customer = await service.patch(req.body);
-    if (customer) {
-      res.send(customer);
-    } else {
-      res.sendStatus(400);
+    try {
+      const customer = await service.patch(req.body);
+      if (customer) {
+        res.send(customer);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 
@@ -189,11 +210,17 @@ export default function customerRoute(
    *          description: Customer could not be deleted
    */
   app.delete('/customers/:id', async (req, res) => {
-    const customerFoundAndDeleted = await service.deleteCustomer(req.params.id);
-    if (customerFoundAndDeleted) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(400);
+    try {
+      const customerFoundAndDeleted = await service.deleteCustomer(
+        req.params.id
+      );
+      if (customerFoundAndDeleted) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      handleApiError(error as Error, res);
     }
   });
 }
