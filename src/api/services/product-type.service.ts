@@ -1,7 +1,7 @@
 import Container, { Service } from 'typedi';
 
-import ProductTypeRepository from '../../data/repositories/ProductTypeRepository';
-import ProductTypeModal from '../../types/ProductType.modal';
+import ProductTypeRepository from '../../data/repositories/product-type.repository';
+import ProductTypeModal from '../../types/product-type.modal';
 
 @Service()
 export default class ProductTypeService {

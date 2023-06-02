@@ -1,7 +1,7 @@
 import Container, { Service } from 'typedi';
 
-import AppSettingRepository from '../../data/repositories/AppSettingRepository';
-import AppSettingModal from '../../types/AppSetting.modal';
+import AppSettingRepository from '../../data/repositories/app-setting.repository';
+import AppSettingModal from '../../types/app-setting.modal';
 
 @Service()
 export default class AppSettingService {

@@ -1,7 +1,7 @@
 import Container, { Service } from 'typedi';
 
-import UserRepository from '../../data/repositories/UserRepository';
-import UserModal from '../../types/User.modal';
+import UserRepository from '../../data/repositories/user.repository';
+import UserModal from '../../types/user.modal';
 
 @Service()
 export default class UserService {

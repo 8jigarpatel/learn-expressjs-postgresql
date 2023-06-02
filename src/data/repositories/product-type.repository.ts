@@ -1,9 +1,9 @@
 import { Service } from 'typedi';
 
+import ProductTypeModal from '../../types/product-type.modal';
 import { dataSource } from '../data-source';
-import ProductType from '../entity/ProductType';
-import ProductTypeModal from '../../types/ProductType.modal';
-import User from '../entity/User';
+import ProductType from '../entity/product-type';
+import User from '../entity/user';
 
 @Service()
 export default class ProductTypeRepository {

@@ -1,12 +1,12 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  OneToOne,
+  Entity,
   JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import ITrackable from './ITrackable';
-import User from './User';
+import User from './user';
 
 @Entity()
 export default class ProductType implements ITrackable {

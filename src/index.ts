@@ -1,40 +1,17 @@
-/* eslint-disable no-restricted-syntax */
 import 'reflect-metadata';
-import express, { Application } from 'express';
 import { log } from 'console';
-import * as path from 'path';
 
+import express, { Application } from 'express';
 import Container from 'typedi';
-import morgan from 'morgan';
-import * as rfs from 'rotating-file-stream';
 
-import Routes from './api/Routes';
+import Routes from './api/routes/routes';
 import swaggerDoc from './utils/swagger';
-import { port, loggingConfig } from './config';
+import { port } from './config';
 import { initDataSource } from './data/data-source';
+import initLogging from './utils/logger';
 
 const app: Application = express();
-
-// JP > TODO: move logging to separate module
-if (loggingConfig.enable) {
-  const loggingFormat = loggingConfig.format || 'combined';
-  log(
-    `Logging enabled [format: '${loggingFormat}'] [location: '${
-      loggingConfig.fileName ? `${loggingConfig.fileName}.log` : 'console'
-    }'].`
-  );
-
-  if (loggingConfig.fileName) {
-    const accessLogStream = rfs.createStream(`${loggingConfig.fileName}.log`, {
-      interval: `${loggingConfig.fileRotationDays}d`,
-      path: path.join(__dirname, 'logs'),
-    });
-    app.use(morgan(loggingFormat, { stream: accessLogStream }));
-  } else {
-    app.use(morgan(loggingFormat));
-  }
-}
-
+initLogging(app);
 initDataSource();
 app.use(express.json());
 

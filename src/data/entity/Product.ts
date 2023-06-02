@@ -1,15 +1,15 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  OneToOne,
+  Entity,
   JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import ITrackable from './ITrackable';
-import User from './User';
 import IAssignable from './IAssignable';
-import ProductType from './ProductType';
-import Customer from './Customer';
+import ITrackable from './ITrackable';
+import Customer from './customer';
+import ProductType from './product-type';
+import User from './user';
 
 @Entity()
 export default class Product implements ITrackable, IAssignable {

@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
+import AppSettingModal from '../../types/app-setting.modal';
 import { dataSource } from '../data-source';
-import AppSetting from '../entity/AppSetting';
-import AppSettingModal from '../../types/AppSetting.modal';
+import AppSetting from '../entity/app-setting';
 
 @Service()
 export default class AppSettingRepository {
